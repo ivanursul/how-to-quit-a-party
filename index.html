@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мистецтво Непомітного Відходу з Вечірки</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 40px 20px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .emoji-title {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #e94560, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 30px;
+            height: 30px;
+            border-bottom: 3px solid #e94560;
+            border-right: 3px solid #e94560;
+            transform: rotate(45deg);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-20px); }
+            60% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* Steps Section */
+        .steps-section {
+            padding: 60px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 60px;
+            color: #feca57;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border-left: 4px solid #e94560;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 40px rgba(233, 69, 96, 0.2);
+        }
+
+        .step::before {
+            content: attr(data-step);
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 4rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.05);
+        }
+
+        .step-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #ff6b6b;
+        }
+
+        .step p {
+            color: #c0c0c0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .step .tip {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(254, 202, 87, 0.1);
+            border-radius: 10px;
+            border-left: 3px solid #feca57;
+            font-size: 0.95rem;
+            color: #feca57;
+        }
+
+        .step .tip::before {
+            content: "Pro tip: ";
+            font-weight: 600;
+        }
+
+        /* Warning Section */
+        .warning-section {
+            background: rgba(233, 69, 96, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 20px;
+            text-align: center;
+            border: 2px dashed #e94560;
+        }
+
+        .warning-section h2 {
+            color: #e94560;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .warning-section ul {
+            list-style: none;
+            text-align: left;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .warning-section li {
+            padding: 10px 0;
+            color: #c0c0c0;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .warning-section li::before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer .quote {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: #a0a0a0;
+            margin-bottom: 20px;
+        }
+
+        footer .author {
+            color: #e94560;
+            font-weight: 600;
+        }
+
+        .back-to-top {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 15px 40px;
+            background: linear-gradient(90deg, #e94560, #ff6b6b);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .emoji-title {
+                font-size: 60px;
+            }
+
+            .step {
+                padding: 25px;
+            }
+
+            .step h3 {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Party lights effect */
+        .party-lights {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        .light {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .light-1 {
+            background: #e94560;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .light-2 {
+            background: #feca57;
+            top: 60%;
+            right: 10%;
+            animation-delay: 1s;
+        }
+
+        .light-3 {
+            background: #48dbfb;
+            bottom: 10%;
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <div class="party-lights">
+        <div class="light light-1"></div>
+        <div class="light light-2"></div>
+        <div class="light light-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero" id="top">
+            <div class="hero-content">
+                <div class="emoji-title">🥷</div>
+                <h1>Мистецтво Непомітного Відходу з Вечірки</h1>
+                <p class="subtitle">Повний гайд для тих, хто цінує свій час та ненавидить довгі прощання</p>
+            </div>
+            <a href="#steps" class="scroll-indicator">
+                <span></span>
+            </a>
+        </section>
+
+        <!-- Steps Section -->
+        <section class="steps-section" id="steps">
+            <h2 class="section-title">📋 Покрокова Інструкція</h2>
+
+            <div class="step" data-step="01">
+                <div class="step-icon">🔍</div>
+                <h3>Крок 1: Розвідка Території</h3>
+                <p>
+                    Перш ніж планувати втечу, вивчи локацію. Де виходи? Де туалет? Де господар?
+                    Запам'ятай розташування дверей так, ніби ти готуєшся до пограбування банку,
+                    але насправді просто хочеш додому подивитись серіал.
+                </p>
+                <div class="tip">Ніколи не сідай в центрі кімнати — завжди обирай місце ближче до виходу!</div>
+            </div>
+
+            <div class="step" data-step="02">
+                <div class="step-icon">⏰</div>
+                <h3>Крок 2: Вибір Ідеального Моменту</h3>
+                <p>
+                    Найкращий час для відходу — коли всі зайняті. Хтось розповідає довгу історію?
+                    Почався танцювальний батл? DJ поставив хіт і всі побігли танцювати?
+                    Це твій шанс! Ніхто не помітить твоєї відсутності в розпал веселощів.
+                </p>
+                <div class="tip">Уникай моментів, коли хтось каже "А де всі? Давайте фоткатись!"</div>
+            </div>
+
+            <div class="step" data-step="03">
+                <div class="step-icon">🎭</div>
+                <h3>Крок 3: Техніка "Я Зараз Повернусь"</h3>
+                <p>
+                    Класика жанру! Скажи комусь, що йдеш до туалету, або вийдеш покурити,
+                    або візьмеш щось з машини. Головне — сказати це впевнено і з посмішкою.
+                    Ніхто не запідозрить, що ти вже ніколи не повернешся.
+                </p>
+                <div class="tip">Залиш на столі напівпорожню склянку — це створить ілюзію твоєї присутності!</div>
+            </div>
+
+            <div class="step" data-step="04">
+                <div class="step-icon">🚶</div>
+                <h3>Крок 4: Повільний Рух до Виходу</h3>
+                <p>
+                    Не біжи! Рухайся спокійно та впевнено. Можеш удавати, що перевіряєш телефон
+                    або шукаєш когось поглядом. Якщо хтось тебе помітить і запитає куди ти —
+                    скажи "в туалет" і продовжуй рух. Туалет — універсальна відмазка.
+                </p>
+                <div class="tip">Тримай куртку в руках так, ніби несеш комусь іншому!</div>
+            </div>
+
+            <div class="step" data-step="05">
+                <div class="step-icon">🚪</div>
+                <h3>Крок 5: Фінальний Ривок</h3>
+                <p>
+                    Коли до дверей залишилось 2-3 метри — не зупиняйся! Це найнебезпечніша зона.
+                    Саме тут тебе можуть спіймати і затягнути в розмову про "а пам'ятаєш як ми..."
+                    на наступні 40 хвилин. Дій швидко, але не панічно.
+                </p>
+                <div class="tip">Якщо двері скриплять — відкривай їх повільно, під прикриттям гучної музики!</div>
+            </div>
+
+            <div class="step" data-step="06">
+                <div class="step-icon">🏃‍♂️</div>
+                <h3>Крок 6: Евакуація</h3>
+                <p>
+                    Ти надворі! Але ще не святкуй. Швидко йди до машини/зупинки/такси.
+                    Не озирайся — це виглядає підозріло. Йди так, ніби ти просто вийшов
+                    подихати свіжим повітрям і точно повернешся... колись... можливо... ні.
+                </p>
+                <div class="tip">Замов таксі заздалегідь, щоб воно вже чекало за рогом!</div>
+            </div>
+
+            <div class="step" data-step="07">
+                <div class="step-icon">📱</div>
+                <h3>Крок 7: Алібі</h3>
+                <p>
+                    Через 30 хвилин надішли повідомлення в чат: "Сорі, мусів терміново піти,
+                    мамі стало погано / кіт заблукав / квартиру затопило / прийшла посилка з Китаю".
+                    Обирай будь-яку відмазку, але не перестарайся з драмою.
+                </p>
+                <div class="tip">Заготуй відмазку ЩЕ ДО вечірки. Імпровізація — ворог успішної втечі!</div>
+            </div>
+        </section>
+
+        <!-- Warning Section -->
+        <div class="warning-section">
+            <h2>⚠️ Типові Помилки Новачків</h2>
+            <ul>
+                <li>Прощатись "тільки з одним другом" — це завжди перетворюється на годину прощань</li>
+                <li>Казати "я скоро піду" — тебе почнуть умовляти залишитись</li>
+                <li>Забути ключі/сумку/телефон і повертатись — місія провалена</li>
+                <li>Постити сторіз вже з дому, коли вечірка ще триває</li>
+                <li>Намагатись тихо відчинити скляні двері — вони завжди гримлять</li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p class="quote">
+                "Справжній майстер йде так тихо, що навіть не чує власних кроків.
+                А ще краще — коли його взагалі не помічають."
+            </p>
+            <p class="author">— Стародавня мудрість інтровертів</p>
+
+            <a href="#top" class="back-to-top">🔝 Повернутись на початок</a>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add subtle parallax effect to party lights
+        document.addEventListener('mousemove', (e) => {
+            const lights = document.querySelectorAll('.light');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            lights.forEach((light, index) => {
+                const speed = (index + 1) * 20;
+                light.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
