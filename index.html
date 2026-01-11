@@ -321,6 +321,144 @@
             0%, 100% { opacity: 0.3; transform: scale(1); }
             50% { opacity: 0.6; transform: scale(1.2); }
         }
+
+        /* Game Section */
+        .game-section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .game-container {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            border: 2px solid #e94560;
+        }
+
+        #gameCanvas {
+            border: 4px solid #feca57;
+            border-radius: 8px;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            max-width: 100%;
+            cursor: none;
+        }
+
+        .game-controls {
+            margin-top: 20px;
+            color: #a0a0a0;
+        }
+
+        .game-controls kbd {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 12px;
+            border-radius: 5px;
+            border: 1px solid #555;
+            font-family: monospace;
+            margin: 0 3px;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .stat-label {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+
+        .stat-value {
+            color: #feca57;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .game-btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .game-btn-primary {
+            background: linear-gradient(90deg, #e94560, #ff6b6b);
+            color: #fff;
+        }
+
+        .game-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+        }
+
+        .game-message {
+            font-size: 1.2rem;
+            margin: 15px 0;
+            min-height: 30px;
+        }
+
+        .mobile-controls {
+            display: none;
+            margin-top: 20px;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .mobile-btn {
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            background: rgba(233, 69, 96, 0.3);
+            border: 2px solid #e94560;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .mobile-btn:active {
+            background: rgba(233, 69, 96, 0.6);
+        }
+
+        .mobile-dpad {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            grid-template-rows: repeat(3, 60px);
+            gap: 5px;
+        }
+
+        .mobile-dpad .mobile-btn:nth-child(1) { grid-area: 1 / 2; }
+        .mobile-dpad .mobile-btn:nth-child(2) { grid-area: 2 / 1; }
+        .mobile-dpad .mobile-btn:nth-child(3) { grid-area: 2 / 3; }
+        .mobile-dpad .mobile-btn:nth-child(4) { grid-area: 3 / 2; }
+
+        @media (max-width: 768px) {
+            .mobile-controls {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 500px) {
+            #gameCanvas {
+                width: 100%;
+                height: auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -437,6 +575,49 @@
             </ul>
         </div>
 
+        <!-- Game Section -->
+        <section class="game-section" id="game">
+            <h2 class="section-title">🎮 Тренажер Втечі</h2>
+            <p style="color: #a0a0a0; margin-bottom: 20px;">Відточи свої навички втечі з вечірки в цій піксельній грі!</p>
+
+            <div class="game-container">
+                <div class="game-stats">
+                    <div class="stat">
+                        <div class="stat-label">Рівень</div>
+                        <div class="stat-value" id="levelDisplay">1</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Час</div>
+                        <div class="stat-value" id="timeDisplay">60</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Спіймано</div>
+                        <div class="stat-value" id="caughtDisplay">0/3</div>
+                    </div>
+                </div>
+
+                <canvas id="gameCanvas" width="480" height="320"></canvas>
+
+                <div class="game-message" id="gameMessage">Натисни "Почати Гру" щоб розпочати!</div>
+
+                <button class="game-btn game-btn-primary" id="startBtn">🎮 Почати Гру</button>
+
+                <div class="mobile-controls">
+                    <div class="mobile-dpad">
+                        <button class="mobile-btn" data-dir="up">↑</button>
+                        <button class="mobile-btn" data-dir="left">←</button>
+                        <button class="mobile-btn" data-dir="right">→</button>
+                        <button class="mobile-btn" data-dir="down">↓</button>
+                    </div>
+                </div>
+
+                <div class="game-controls">
+                    <p>Керування: <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> або <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></p>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">🎯 Дістанься до дверей! 📱 Збирай телефони для невидимості!</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Footer -->
         <footer>
             <p class="quote">
@@ -474,6 +655,544 @@
                 light.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
             });
         });
+
+        // ============== PARTY ESCAPE GAME ==============
+        (function() {
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            const startBtn = document.getElementById('startBtn');
+            const gameMessage = document.getElementById('gameMessage');
+            const levelDisplay = document.getElementById('levelDisplay');
+            const timeDisplay = document.getElementById('timeDisplay');
+            const caughtDisplay = document.getElementById('caughtDisplay');
+
+            // Game constants
+            const TILE_SIZE = 16;
+            const PLAYER_SIZE = 14;
+            const COLS = canvas.width / TILE_SIZE;
+            const ROWS = canvas.height / TILE_SIZE;
+
+            // Colors (pixel art palette)
+            const COLORS = {
+                floor: '#2d1b4e',
+                floorPattern: '#3d2b5e',
+                wall: '#1a1a2e',
+                table: '#8b4513',
+                tableTop: '#a0522d',
+                couch: '#4a0e4e',
+                couchHighlight: '#6a2e6e',
+                dj: '#333',
+                djLight: '#e94560',
+                player: '#48dbfb',
+                playerOutline: '#0984e3',
+                guest: '#ff6b6b',
+                guestOutline: '#c0392b',
+                door: '#27ae60',
+                doorHighlight: '#2ecc71',
+                phone: '#feca57',
+                invisible: 'rgba(72, 219, 251, 0.3)'
+            };
+
+            // Game state
+            let gameRunning = false;
+            let level = 1;
+            let timeLeft = 60;
+            let caughtCount = 0;
+            let maxCaught = 3;
+            let timer = null;
+
+            // Player
+            let player = {
+                x: 40,
+                y: 160,
+                speed: 2,
+                invisible: false,
+                invisibleTimer: 0
+            };
+
+            // Door position
+            let door = { x: 448, y: 144, width: 32, height: 48 };
+
+            // Obstacles (tables, couches, DJ booth)
+            let obstacles = [];
+
+            // NPCs (party guests)
+            let guests = [];
+
+            // Power-ups
+            let powerups = [];
+
+            // Keys pressed
+            let keys = {};
+
+            // Generate level
+            function generateLevel() {
+                obstacles = [];
+                guests = [];
+                powerups = [];
+
+                // Reset player
+                player.x = 40;
+                player.y = 160;
+                player.invisible = false;
+                player.invisibleTimer = 0;
+
+                // Add walls (borders)
+                // Top and bottom walls are implied by canvas edge
+
+                // Add furniture based on level
+                // DJ Booth (top right)
+                obstacles.push({ x: 380, y: 20, width: 80, height: 40, type: 'dj' });
+
+                // Tables
+                obstacles.push({ x: 120, y: 60, width: 64, height: 32, type: 'table' });
+                obstacles.push({ x: 200, y: 200, width: 64, height: 32, type: 'table' });
+                obstacles.push({ x: 300, y: 120, width: 48, height: 32, type: 'table' });
+
+                // Couches
+                obstacles.push({ x: 20, y: 240, width: 80, height: 32, type: 'couch' });
+                obstacles.push({ x: 350, y: 240, width: 80, height: 32, type: 'couch' });
+
+                // Add more obstacles for higher levels
+                if (level >= 2) {
+                    obstacles.push({ x: 180, y: 100, width: 32, height: 48, type: 'table' });
+                }
+                if (level >= 3) {
+                    obstacles.push({ x: 280, y: 220, width: 48, height: 32, type: 'couch' });
+                }
+
+                // Add guests
+                const guestCount = 2 + level;
+                const guestPositions = [
+                    { x: 150, y: 120 },
+                    { x: 250, y: 180 },
+                    { x: 350, y: 100 },
+                    { x: 200, y: 260 },
+                    { x: 320, y: 200 },
+                    { x: 100, y: 200 },
+                    { x: 400, y: 180 }
+                ];
+
+                for (let i = 0; i < Math.min(guestCount, guestPositions.length); i++) {
+                    guests.push({
+                        x: guestPositions[i].x,
+                        y: guestPositions[i].y,
+                        speed: 0.5 + (level * 0.2),
+                        direction: Math.random() * Math.PI * 2,
+                        changeTimer: 0,
+                        chasing: false,
+                        visionRange: 60 + (level * 10)
+                    });
+                }
+
+                // Add power-ups (phones)
+                const phoneCount = Math.max(1, 3 - Math.floor(level / 2));
+                for (let i = 0; i < phoneCount; i++) {
+                    let validPos = false;
+                    let px, py;
+                    while (!validPos) {
+                        px = 80 + Math.random() * 320;
+                        py = 40 + Math.random() * 240;
+                        validPos = !checkCollision({ x: px, y: py, width: 16, height: 16 });
+                    }
+                    powerups.push({ x: px, y: py, type: 'phone', collected: false });
+                }
+            }
+
+            // Check collision with obstacles
+            function checkCollision(rect) {
+                for (let obs of obstacles) {
+                    if (rectIntersect(rect, obs)) return true;
+                }
+                return false;
+            }
+
+            // Rectangle intersection
+            function rectIntersect(r1, r2) {
+                return r1.x < r2.x + r2.width &&
+                       r1.x + (r1.width || PLAYER_SIZE) > r2.x &&
+                       r1.y < r2.y + r2.height &&
+                       r1.y + (r1.height || PLAYER_SIZE) > r2.y;
+            }
+
+            // Draw pixel art rectangle with outline
+            function drawPixelRect(x, y, w, h, color, outlineColor) {
+                ctx.fillStyle = color;
+                ctx.fillRect(Math.floor(x), Math.floor(y), w, h);
+                if (outlineColor) {
+                    ctx.strokeStyle = outlineColor;
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(Math.floor(x), Math.floor(y), w, h);
+                }
+            }
+
+            // Draw the game
+            function draw() {
+                // Clear canvas
+                ctx.fillStyle = COLORS.floor;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Draw floor pattern
+                ctx.fillStyle = COLORS.floorPattern;
+                for (let x = 0; x < COLS; x++) {
+                    for (let y = 0; y < ROWS; y++) {
+                        if ((x + y) % 2 === 0) {
+                            ctx.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                        }
+                    }
+                }
+
+                // Draw disco lights effect
+                const time = Date.now() / 500;
+                for (let i = 0; i < 3; i++) {
+                    const lightX = 200 + Math.sin(time + i * 2) * 100;
+                    const lightY = 100 + Math.cos(time + i * 2) * 50;
+                    const gradient = ctx.createRadialGradient(lightX, lightY, 0, lightX, lightY, 80);
+                    const hue = (time * 50 + i * 120) % 360;
+                    gradient.addColorStop(0, `hsla(${hue}, 70%, 50%, 0.15)`);
+                    gradient.addColorStop(1, 'transparent');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+
+                // Draw obstacles
+                for (let obs of obstacles) {
+                    if (obs.type === 'table') {
+                        drawPixelRect(obs.x, obs.y + 4, obs.width, obs.height - 4, COLORS.table);
+                        drawPixelRect(obs.x + 2, obs.y, obs.width - 4, 8, COLORS.tableTop);
+                        // Table legs
+                        ctx.fillStyle = '#5d3a1a';
+                        ctx.fillRect(obs.x + 4, obs.y + obs.height - 4, 4, 4);
+                        ctx.fillRect(obs.x + obs.width - 8, obs.y + obs.height - 4, 4, 4);
+                    } else if (obs.type === 'couch') {
+                        drawPixelRect(obs.x, obs.y, obs.width, obs.height, COLORS.couch);
+                        drawPixelRect(obs.x + 4, obs.y + 4, obs.width - 8, obs.height - 12, COLORS.couchHighlight);
+                        // Armrests
+                        drawPixelRect(obs.x, obs.y + 4, 6, obs.height - 8, COLORS.couchHighlight);
+                        drawPixelRect(obs.x + obs.width - 6, obs.y + 4, 6, obs.height - 8, COLORS.couchHighlight);
+                    } else if (obs.type === 'dj') {
+                        drawPixelRect(obs.x, obs.y, obs.width, obs.height, COLORS.dj);
+                        // DJ equipment
+                        ctx.fillStyle = '#444';
+                        ctx.fillRect(obs.x + 10, obs.y + 8, 20, 15);
+                        ctx.fillRect(obs.x + 50, obs.y + 8, 20, 15);
+                        // Blinking light
+                        ctx.fillStyle = Math.sin(Date.now() / 200) > 0 ? COLORS.djLight : '#ff0000';
+                        ctx.fillRect(obs.x + 36, obs.y + 5, 8, 8);
+                    }
+                }
+
+                // Draw door
+                drawPixelRect(door.x, door.y, door.width, door.height, COLORS.door, COLORS.doorHighlight);
+                // Door handle
+                ctx.fillStyle = '#feca57';
+                ctx.fillRect(door.x + 6, door.y + door.height / 2, 4, 6);
+                // EXIT sign
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 10px monospace';
+                ctx.fillText('EXIT', door.x + 4, door.y - 5);
+                // Glowing effect
+                if (Math.sin(Date.now() / 300) > 0) {
+                    ctx.fillStyle = 'rgba(46, 204, 113, 0.3)';
+                    ctx.fillRect(door.x - 4, door.y - 4, door.width + 8, door.height + 8);
+                }
+
+                // Draw power-ups
+                for (let pu of powerups) {
+                    if (!pu.collected) {
+                        // Phone icon
+                        ctx.fillStyle = COLORS.phone;
+                        ctx.fillRect(pu.x, pu.y, 12, 18);
+                        ctx.fillStyle = '#333';
+                        ctx.fillRect(pu.x + 2, pu.y + 2, 8, 12);
+                        ctx.fillStyle = '#48dbfb';
+                        ctx.fillRect(pu.x + 4, pu.y + 14, 4, 2);
+                        // Glow
+                        ctx.beginPath();
+                        ctx.arc(pu.x + 6, pu.y + 9, 12, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(254, 202, 87, 0.2)';
+                        ctx.fill();
+                    }
+                }
+
+                // Draw guests
+                for (let guest of guests) {
+                    // Vision cone (if not invisible)
+                    if (!player.invisible) {
+                        ctx.fillStyle = guest.chasing ? 'rgba(255, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.05)';
+                        ctx.beginPath();
+                        ctx.arc(guest.x + 8, guest.y + 8, guest.visionRange, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                    // Guest body
+                    ctx.fillStyle = guest.chasing ? '#ff0000' : COLORS.guest;
+                    ctx.fillRect(guest.x, guest.y + 4, 16, 16);
+                    // Head
+                    ctx.fillRect(guest.x + 3, guest.y, 10, 10);
+                    // Eyes
+                    ctx.fillStyle = '#fff';
+                    ctx.fillRect(guest.x + 5, guest.y + 3, 3, 3);
+                    ctx.fillRect(guest.x + 10, guest.y + 3, 3, 3);
+                    // Exclamation mark if chasing
+                    if (guest.chasing) {
+                        ctx.fillStyle = '#ff0000';
+                        ctx.font = 'bold 14px monospace';
+                        ctx.fillText('!', guest.x + 6, guest.y - 5);
+                    }
+                }
+
+                // Draw player
+                if (player.invisible) {
+                    ctx.globalAlpha = 0.4;
+                    ctx.fillStyle = COLORS.invisible;
+                } else {
+                    ctx.fillStyle = COLORS.player;
+                }
+                // Player body
+                ctx.fillRect(player.x, player.y + 4, 14, 14);
+                // Head
+                ctx.fillRect(player.x + 2, player.y, 10, 8);
+                // Ninja mask
+                ctx.fillStyle = player.invisible ? 'rgba(0,0,0,0.3)' : '#1a1a2e';
+                ctx.fillRect(player.x + 2, player.y + 2, 10, 4);
+                // Eyes
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(player.x + 4, player.y + 3, 2, 2);
+                ctx.fillRect(player.x + 9, player.y + 3, 2, 2);
+
+                ctx.globalAlpha = 1;
+
+                // Draw invisibility timer bar
+                if (player.invisible) {
+                    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+                    ctx.fillRect(player.x - 3, player.y - 8, 20, 4);
+                    ctx.fillStyle = '#48dbfb';
+                    ctx.fillRect(player.x - 3, player.y - 8, 20 * (player.invisibleTimer / 180), 4);
+                }
+            }
+
+            // Update game state
+            function update() {
+                if (!gameRunning) return;
+
+                // Player movement
+                let newX = player.x;
+                let newY = player.y;
+
+                if (keys['ArrowUp'] || keys['KeyW']) newY -= player.speed;
+                if (keys['ArrowDown'] || keys['KeyS']) newY += player.speed;
+                if (keys['ArrowLeft'] || keys['KeyA']) newX -= player.speed;
+                if (keys['ArrowRight'] || keys['KeyD']) newX += player.speed;
+
+                // Check boundaries
+                newX = Math.max(0, Math.min(canvas.width - PLAYER_SIZE, newX));
+                newY = Math.max(0, Math.min(canvas.height - PLAYER_SIZE, newY));
+
+                // Check collision with obstacles
+                const playerRect = { x: newX, y: newY, width: PLAYER_SIZE, height: PLAYER_SIZE + 4 };
+                if (!checkCollision(playerRect)) {
+                    player.x = newX;
+                    player.y = newY;
+                } else {
+                    // Try sliding along walls
+                    const playerRectX = { x: newX, y: player.y, width: PLAYER_SIZE, height: PLAYER_SIZE + 4 };
+                    const playerRectY = { x: player.x, y: newY, width: PLAYER_SIZE, height: PLAYER_SIZE + 4 };
+                    if (!checkCollision(playerRectX)) player.x = newX;
+                    if (!checkCollision(playerRectY)) player.y = newY;
+                }
+
+                // Update invisibility
+                if (player.invisible) {
+                    player.invisibleTimer--;
+                    if (player.invisibleTimer <= 0) {
+                        player.invisible = false;
+                    }
+                }
+
+                // Check power-up collection
+                for (let pu of powerups) {
+                    if (!pu.collected) {
+                        const dist = Math.hypot(player.x - pu.x, player.y - pu.y);
+                        if (dist < 20) {
+                            pu.collected = true;
+                            player.invisible = true;
+                            player.invisibleTimer = 180; // 3 seconds at 60fps
+                            gameMessage.textContent = '📱 Невидимість активовано!';
+                            gameMessage.style.color = '#48dbfb';
+                        }
+                    }
+                }
+
+                // Update guests
+                for (let guest of guests) {
+                    // Check if player is in vision
+                    const dist = Math.hypot((player.x + 7) - (guest.x + 8), (player.y + 9) - (guest.y + 8));
+
+                    if (!player.invisible && dist < guest.visionRange) {
+                        guest.chasing = true;
+                        // Move towards player
+                        const angle = Math.atan2(player.y - guest.y, player.x - guest.x);
+                        guest.x += Math.cos(angle) * guest.speed * 1.5;
+                        guest.y += Math.sin(angle) * guest.speed * 1.5;
+                    } else {
+                        guest.chasing = false;
+                        // Random patrol movement
+                        guest.changeTimer++;
+                        if (guest.changeTimer > 60 + Math.random() * 60) {
+                            guest.direction = Math.random() * Math.PI * 2;
+                            guest.changeTimer = 0;
+                        }
+
+                        const newGx = guest.x + Math.cos(guest.direction) * guest.speed;
+                        const newGy = guest.y + Math.sin(guest.direction) * guest.speed;
+
+                        // Keep guests in bounds and away from obstacles
+                        if (newGx > 20 && newGx < canvas.width - 40 &&
+                            newGy > 20 && newGy < canvas.height - 40 &&
+                            !checkCollision({ x: newGx, y: newGy, width: 16, height: 20 })) {
+                            guest.x = newGx;
+                            guest.y = newGy;
+                        } else {
+                            guest.direction = Math.random() * Math.PI * 2;
+                        }
+                    }
+
+                    // Check if guest caught player
+                    if (dist < 18 && !player.invisible) {
+                        caughtCount++;
+                        caughtDisplay.textContent = `${caughtCount}/${maxCaught}`;
+
+                        if (caughtCount >= maxCaught) {
+                            gameOver(false);
+                            return;
+                        }
+
+                        // Reset player position
+                        player.x = 40;
+                        player.y = 160;
+                        gameMessage.textContent = '😱 Тебе спіймали! "А куди це ти йдеш?"';
+                        gameMessage.style.color = '#e94560';
+                    }
+                }
+
+                // Check if player reached door
+                if (rectIntersect({ x: player.x, y: player.y, width: PLAYER_SIZE, height: PLAYER_SIZE + 4 }, door)) {
+                    levelComplete();
+                }
+            }
+
+            // Level complete
+            function levelComplete() {
+                level++;
+                levelDisplay.textContent = level;
+                timeLeft = Math.max(30, 60 - (level - 1) * 5);
+                timeDisplay.textContent = timeLeft;
+                gameMessage.textContent = `🎉 Рівень ${level - 1} пройдено! Готуйся до наступного...`;
+                gameMessage.style.color = '#2ecc71';
+
+                generateLevel();
+            }
+
+            // Game over
+            function gameOver(won) {
+                gameRunning = false;
+                clearInterval(timer);
+
+                if (won) {
+                    gameMessage.textContent = '🏆 Ти справжній майстер втечі!';
+                    gameMessage.style.color = '#2ecc71';
+                } else {
+                    gameMessage.textContent = '💀 Гра закінчена! Тебе затримали нудними розмовами...';
+                    gameMessage.style.color = '#e94560';
+                }
+
+                startBtn.textContent = '🔄 Грати Знову';
+                startBtn.style.display = 'inline-block';
+            }
+
+            // Game loop
+            function gameLoop() {
+                update();
+                draw();
+                if (gameRunning) {
+                    requestAnimationFrame(gameLoop);
+                }
+            }
+
+            // Start game
+            function startGame() {
+                level = 1;
+                timeLeft = 60;
+                caughtCount = 0;
+                gameRunning = true;
+
+                levelDisplay.textContent = level;
+                timeDisplay.textContent = timeLeft;
+                caughtDisplay.textContent = `${caughtCount}/${maxCaught}`;
+                gameMessage.textContent = 'Тікай до виходу!';
+                gameMessage.style.color = '#feca57';
+
+                startBtn.style.display = 'none';
+
+                generateLevel();
+
+                // Start timer
+                if (timer) clearInterval(timer);
+                timer = setInterval(() => {
+                    timeLeft--;
+                    timeDisplay.textContent = timeLeft;
+                    if (timeLeft <= 0) {
+                        gameOver(false);
+                    }
+                }, 1000);
+
+                gameLoop();
+            }
+
+            // Event listeners
+            document.addEventListener('keydown', (e) => {
+                keys[e.code] = true;
+                // Prevent scrolling with arrow keys when game is active
+                if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code) && gameRunning) {
+                    e.preventDefault();
+                }
+            });
+
+            document.addEventListener('keyup', (e) => {
+                keys[e.code] = false;
+            });
+
+            startBtn.addEventListener('click', startGame);
+
+            // Mobile controls
+            document.querySelectorAll('.mobile-btn').forEach(btn => {
+                const dir = btn.dataset.dir;
+                const keyMap = {
+                    'up': 'ArrowUp',
+                    'down': 'ArrowDown',
+                    'left': 'ArrowLeft',
+                    'right': 'ArrowRight'
+                };
+
+                btn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    keys[keyMap[dir]] = true;
+                });
+
+                btn.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    keys[keyMap[dir]] = false;
+                });
+
+                btn.addEventListener('mousedown', () => keys[keyMap[dir]] = true);
+                btn.addEventListener('mouseup', () => keys[keyMap[dir]] = false);
+                btn.addEventListener('mouseleave', () => keys[keyMap[dir]] = false);
+            });
+
+            // Initial draw
+            draw();
+        })();
     </script>
 </body>
 </html>
